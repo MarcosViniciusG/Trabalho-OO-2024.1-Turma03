@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
+        <style>
+            #index-body {
+                background-image:url("{{url_for('static', filename='background.jpg')}}");
+                background-repeat:no-repeat;
+                background-size:cover;
+            }
+        </style>
+    </head>
+    <body id="index-body">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+
+        {% if messages %}
+        {% for category, message in messages %}
+            <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block body %}{% endblock %}
+        <div id="index">
+            <div id="login">
+                <p class="titulo">
+                    Realize login para visualizar suas coleções de obras de arte
+                </p>
+                <form action="{{ url_for('login') }}" method="POST">
+                    <p>Nome: <input type="text" name="nome" id=login-nome></p>
+                    <p>Senha: <input type="password" name="senha" id="login-senha"></p>
+                    <p> <input type="checkbox" onclick="mostrarSenha('login')"> Mostrar senha</p>
+                    <button type="submit" class="botao">Login</button>
+                </form>
+            </div>
+            <hr>
+            <div id="cadastro">
+                <p class="titulo">
+                    Ou cadastre-se e comece a criar coleções de suas obras de arte favoritas
+                </p>
+                <form action="{{ url_for('adicionarUsuario') }}" method="POST">
+                    <p>Nome: <input type="text" name="nome" id=cadastro-nome></p>
+                    <p>Senha: <input type="password" name="senha" id="cadastro-senha"></p>
+                    <p> <input type="checkbox" onclick="mostrarSenha('cadastro')"> Mostrar senha</p>
+                    <button type="submit" class="botao">Cadastrar</button>
+                </form>
+            </div>
+        </div>
+    </body>
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+</html>

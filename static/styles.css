@@ -1,0 +1,146 @@
+#index {
+    background-color:white;
+    border-width: 0px 0px 0px 0px;
+    border-style: solid;
+    border-radius: 20px;
+    position:relative;
+    padding: 50px;
+    width: 60%;
+    margin: 0 auto;
+}
+
+#central {
+    background-color: lightgray;
+    border-width: 0px 0px 0px 0px;
+    border-style: solid;
+    border-radius: 20px;
+    position:relative;
+    text-align:center;
+    align-items: center;
+    justify-content: center;
+    width: 1010x;
+    height: min-content;
+    padding:10px;
+    margin: 10px auto;
+}
+
+#obras {
+    background-color: dimgray;
+    border-width: 5px 5px 5px 5px;
+    border-style: solid;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 10;
+    justify-content: center;
+    width: 70 %;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+#itens {
+    display: grid;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+p {
+    font-family: system-ui;
+}
+
+.titulo {
+    font-weight:bold;
+    font-size: 24px;
+    margin-bottom:10px;
+}
+
+.img-button {
+    border: none;
+}
+
+.botao {
+    font-family: system-ui;
+    background-color: #808000;
+    padding:10px;
+    border:none;
+    border-radius: 10px;
+    color:white;
+    text-align:center;
+    align-items: center;
+    height: min-content;
+}
+
+.botao:hover {
+    background-color: #5D5D00;
+}
+
+.error {
+    font-family: system-ui;
+    background-color: #FFCCCB;
+    padding:10px;
+    border:none;
+    border-radius: 10px;
+    color:black;
+    text-align:center;
+    align-items: center;
+}
+
+#colecoes {
+    display: grid;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.colecao {
+    background-color: lightgray;
+    border-width: 0px 0px 0px 0px;
+    border-style: solid;
+    border-radius: 20px;
+    position:relative;
+    width: 200px;
+    height: min-content;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.obra-img, .item-img, .central-img {
+    height: auto;
+    width: auto;
+    max-width: 300px;
+    max-height: 300px;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.item-img {
+    max-width: 200px;
+    max-height: 200px;
+}
+
+.central-img {
+    max-width: 1000px;
+    max-height: 1000px;
+}
+
+.obra {
+    background-color: lightgray;
+    border-width: 0px 0px 0px 0px;
+    border-style: solid;
+    border-radius: 20px;
+    position:relative;
+    padding: 50px;
+    width: 70%;
+    height: 450px;
+    margin: 0 auto;
+}

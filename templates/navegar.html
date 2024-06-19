@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
+    </head>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+
+        {% if messages %}
+        {% for category, message in messages %}
+            <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block body %}{% endblock %}
+        <script>
+            let obra;
+            let obras = {};
+        </script>
+        <a href="{{ url_for('visualizarColecao', colecaoId = info.colecaoId, tipoIterator='obras') }}"><button class="botao">Ver todas as obras dentro das coleções</button></a>
+        <div id="central">
+            <p>Clique em uma obra para visualizá-la ou adicione uma nova obra/coleção em sua colecão</p>
+        </div>
+        <div id="itens">
+            {% for item in info.mostrar %}
+                <div class="item" id="item-{{item.id}}">
+                    {% if item.tipo == "obra" %}
+                    <script>
+                        obra = {
+                            "id": {{ item.itemId }},
+                            "titulo": '{{ item.titulo }}',
+                            "autor": '{{ item.autor }}' ,
+                            "descricao":'{{ item.descricao }}',
+                            "estilo": '{{ item.estilo }}',
+                            "ano": '{{ item.ano }}',
+                            "caminho": '{{url_for('static', filename='imgs/'+item.caminho)}}',
+                            "chatgpt": "{{url_for('chatgpt')}}",
+                            "colecaoId": {{info.colecaoId}}
+                            };
+                        obras["{{ item.id }}"] = obra;
+                    </script>
+                    <button type="button" class="img-button" onclick="ativarObra(obras, {{ item.id }})">
+                        <img class="item-img" src="{{url_for('static', filename='imgs/'+item.caminho)}}" border="0"/>
+                    </button>
+                    <p>Título: {{item.titulo}} </p>
+                    <p>Autor: {{item.autor}} </p>
+                    <p>Ano: {{item.ano}}</p>
+                    {% else %}
+                    <p>Nome: {{item.nome}} </p>
+                    <p>Descrição: {{item.descricao}} </p>
+                    <a href="{{ url_for('visualizarColecao', colecaoId = item.itemId, tipoIterator='nivelInicial') }}"><button class="botao">Visualizar</button></a>
+                    {% endif %}
+                    <form action="{{ url_for('excluirItemColecao') }}" method="POST">
+                        <input type="hidden" name="colecaoId" value="{{info.colecaoId}}">
+                        <input type="hidden" name="id" value="{{item.id}}">
+                        <button type="submit" class="botao">Excluir item</button>
+                    </form>
+                </div>
+            {% endfor %}
+            <div id="adicionar">
+                <button class="botao" id="mostrarObras" onclick="mostrarObras()">Adicionar obra</button>
+                <button class="botao" id="mostrarColecoes" onclick="mostrarColecoes()">Adicionar coleção</button>
+            </div>
+        </div>
+
+        <div style="display: none;" id="obras">
+            {% for obra in info.obras %}
+                <div class="obra" id="obras-{{obra.id}}">
+                    <form action="{{ url_for('adicionarItemColecao') }}" method="POST">
+                        <input type="hidden" name="colecaoId" value="{{info.colecaoId}}">
+                        <input type="hidden" name="tipo" value="obra">
+                        <input type="hidden" name="itemId" value="{{obra.id}}">
+                        <button type="submit" class="img-button">
+                            <img class="obra-img" src="{{url_for('static', filename='imgs/'+obra.caminho)}}" border="0"/>
+                        </button>
+                    </form>
+                    <p>Título: {{obra.titulo}} </p>
+                    <p>Autor: {{obra.autor}} </p>
+                    <p>Ano: {{obra.ano}}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div style="display: none;" id="colecoes">
+            {% for colecao in info.colecoes %}
+                {% if (colecao.id != info.colecaoId and colecao.id not in info.exclude) %}
+                <div class="colecao" id="colecoes-{{colecao.id}}">
+                    <p>Nome: {{colecao.nome}}</p>
+                    <p>Descrição: {{colecao.descricao}}</p>
+                    <form action="{{ url_for('adicionarItemColecao') }}" method="POST">
+                        <input type="hidden" name="colecaoId" value="{{info.colecaoId}}">
+                        <input type="hidden" name="tipo" value="colecao">
+                        <input type="hidden" name="itemId" value="{{colecao.id}}">
+
+                        <button type="submit" class="botao">Adicionar</button>
+                    </form>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <a href="{{ url_for('home') }}"><button class="botao">Voltar</button></a>
+        <a href="{{ url_for('logout') }}"><button class="botao">Logout</button></a>
+    </body>
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+</html>

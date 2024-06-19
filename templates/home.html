@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
+    </head>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+
+        {% if messages %}
+        {% for category, message in messages %}
+            <p class="{{ category }}">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block body %}{% endblock %}
+        <p>Crie uma coleção ou acesse uma</p>
+        <div id="colecoes">
+            {% for colecao in colecoes %}
+            <div class="colecao">
+                <p>Nome: {{colecao.nome}}</p>
+                <p>Descrição: {{colecao.descricao}}</p>
+                <a href="{{ url_for('visualizarColecao', colecaoId = colecao.id, tipoIterator='nivelInicial') }}"><button class="botao">Visualizar</button></a>
+                <form action="{{ url_for('excluirColecao') }}" method="POST">
+                    <input type="hidden" name="colecaoId" value="{{colecao.id}}">
+                    <button type="submit" class="botao">Excluir</button>
+                </form>
+                <form action="{{ url_for('modificarColecao') }}" method="POST">
+                    <input type="hidden" name="colecaoId" value="{{colecao.id}}">
+                    <p>Novo nome: <input type="text" name="novoNome"></p>
+                    <p>Nova descrição: <input type="text" name="novaDescricao"></p>
+                    <button type="submit" class="botao">Modificar</button>
+                </form>
+            </div>
+            {% endfor %}
+            <div id="adicionarColecao">
+                <form action="{{ url_for('adicionarColecao') }}" method="POST">
+                    <p>Nome: <input type="text" name="nome"></p>
+                    <p>Descrição: <input type="text" name="descricao"></p>
+                    <button type="submit" class="botao">Adicionar</button>
+                </form>
+            </div>
+        </div>
+
+        <a href="{{ url_for('logout') }}"><button class="botao">Logout</button></a>
+    </body>
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+</html>
